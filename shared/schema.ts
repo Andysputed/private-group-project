@@ -9,6 +9,12 @@ export const UserRole = {
   ADMIN: 'admin'
 } as const;
 
+export const StaffRole = {
+  DOCTOR: UserRole.DOCTOR,
+  RECEPTIONIST: UserRole.RECEPTIONIST,
+  ADMIN: UserRole.ADMIN
+} as const;
+
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: text("username").notNull().unique(),

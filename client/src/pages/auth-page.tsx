@@ -2,11 +2,12 @@ import { useAuth } from "@/hooks/use-auth";
 import { Redirect } from "wouter";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { insertUserSchema, type InsertUser } from "@shared/schema";
+import { insertUserSchema, type InsertUser, StaffRole } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalendarDays } from "lucide-react";
 
@@ -20,7 +21,7 @@ export default function AuthPage() {
     },
   });
 
-  const registerForm = useForm<InsertUser>({
+  const patientForm = useForm<InsertUser>({
     resolver: zodResolver(insertUserSchema),
     defaultValues: {
       username: "",
@@ -31,6 +32,20 @@ export default function AuthPage() {
       role: "patient",
       phone: "",
       medicalHistory: "",
+    },
+  });
+
+  const staffForm = useForm<InsertUser>({
+    resolver: zodResolver(insertUserSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+      confirmPassword: "",
+      email: "",
+      name: "",
+      role: "doctor",
+      phone: "",
+      specialization: "",
     },
   });
 
@@ -49,9 +64,10 @@ export default function AuthPage() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="login" className="space-y-4">
-              <TabsList className="grid w-full grid-cols-2">
+              <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="login">Login</TabsTrigger>
-                <TabsTrigger value="register">Register</TabsTrigger>
+                <TabsTrigger value="patient">Patient</TabsTrigger>
+                <TabsTrigger value="staff">Staff</TabsTrigger>
               </TabsList>
 
               <TabsContent value="login">
@@ -85,57 +101,57 @@ export default function AuthPage() {
                 </form>
               </TabsContent>
 
-              <TabsContent value="register">
-                <form onSubmit={registerForm.handleSubmit((data) => registerMutation.mutate(data))}>
+              <TabsContent value="patient">
+                <form onSubmit={patientForm.handleSubmit((data) => registerMutation.mutate(data))}>
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="reg-name">Full Name</Label>
+                      <Label htmlFor="patient-name">Full Name</Label>
                       <Input 
-                        id="reg-name" 
-                        {...registerForm.register("name")}
+                        id="patient-name" 
+                        {...patientForm.register("name")}
                         className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="reg-email">Email</Label>
+                      <Label htmlFor="patient-email">Email</Label>
                       <Input 
-                        id="reg-email" 
+                        id="patient-email" 
                         type="email" 
-                        {...registerForm.register("email")}
+                        {...patientForm.register("email")}
                         className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="reg-username">Username</Label>
+                      <Label htmlFor="patient-username">Username</Label>
                       <Input 
-                        id="reg-username" 
-                        {...registerForm.register("username")}
+                        id="patient-username" 
+                        {...patientForm.register("username")}
                         className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="reg-password">Password</Label>
+                      <Label htmlFor="patient-password">Password</Label>
                       <Input 
-                        id="reg-password" 
+                        id="patient-password" 
                         type="password" 
-                        {...registerForm.register("password")}
+                        {...patientForm.register("password")}
                         className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="reg-confirm">Confirm Password</Label>
+                      <Label htmlFor="patient-confirm">Confirm Password</Label>
                       <Input 
-                        id="reg-confirm" 
+                        id="patient-confirm" 
                         type="password" 
-                        {...registerForm.register("confirmPassword")}
+                        {...patientForm.register("confirmPassword")}
                         className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="reg-phone">Phone (optional)</Label>
+                      <Label htmlFor="patient-phone">Phone (optional)</Label>
                       <Input 
-                        id="reg-phone" 
-                        {...registerForm.register("phone")}
+                        id="patient-phone" 
+                        {...patientForm.register("phone")}
                         className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                       />
                     </div>
@@ -144,7 +160,90 @@ export default function AuthPage() {
                       className="w-full bg-gradient-to-r from-primary to-blue-600 hover:opacity-90 transition-opacity"
                       disabled={registerMutation.isPending}
                     >
-                      {registerMutation.isPending ? "Creating Account..." : "Register"}
+                      {registerMutation.isPending ? "Creating Account..." : "Register as Patient"}
+                    </Button>
+                  </div>
+                </form>
+              </TabsContent>
+
+              <TabsContent value="staff">
+                <form onSubmit={staffForm.handleSubmit((data) => registerMutation.mutate(data))}>
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="staff-role">Staff Role</Label>
+                      <Select 
+                        onValueChange={(value) => staffForm.setValue("role", value)}
+                        defaultValue={staffForm.getValues("role")}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value={StaffRole.DOCTOR}>Doctor</SelectItem>
+                          <SelectItem value={StaffRole.RECEPTIONIST}>Receptionist</SelectItem>
+                          <SelectItem value={StaffRole.ADMIN}>Administrator</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="staff-name">Full Name</Label>
+                      <Input 
+                        id="staff-name" 
+                        {...staffForm.register("name")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="staff-email">Email</Label>
+                      <Input 
+                        id="staff-email" 
+                        type="email" 
+                        {...staffForm.register("email")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="staff-username">Username</Label>
+                      <Input 
+                        id="staff-username" 
+                        {...staffForm.register("username")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="staff-password">Password</Label>
+                      <Input 
+                        id="staff-password" 
+                        type="password" 
+                        {...staffForm.register("password")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="staff-confirm">Confirm Password</Label>
+                      <Input 
+                        id="staff-confirm" 
+                        type="password" 
+                        {...staffForm.register("confirmPassword")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
+                    </div>
+                    {staffForm.watch("role") === StaffRole.DOCTOR && (
+                      <div className="space-y-2">
+                        <Label htmlFor="staff-specialization">Specialization</Label>
+                        <Input 
+                          id="staff-specialization" 
+                          {...staffForm.register("specialization")}
+                          className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                        />
+                      </div>
+                    )}
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-gradient-to-r from-primary to-blue-600 hover:opacity-90 transition-opacity"
+                      disabled={registerMutation.isPending}
+                    >
+                      {registerMutation.isPending ? "Creating Account..." : "Register as Staff"}
                     </Button>
                   </div>
                 </form>
