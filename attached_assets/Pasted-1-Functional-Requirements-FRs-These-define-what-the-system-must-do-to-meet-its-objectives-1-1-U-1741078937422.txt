@@ -1,0 +1,129 @@
+1. Functional Requirements (FRs)
+These define what the system must do to meet its objectives.
+
+1.1 User Management
+✅ Patient Registration & Login
+
+Patients should be able to create an account with name, contact details, and medical history (optional).
+Authentication via email/phone and password or OTP verification.
+Social login options (Google, Facebook) (optional).
+✅ Doctor/Clinic Staff Registration & Login
+
+Clinic staff must have accounts with roles (Receptionist, Doctor, Administrator).
+Different access levels:
+Receptionist: Manage appointments and patient records.
+Doctor: View their schedule and patient details.
+Administrator: Oversee all bookings and manage system settings.
+✅ User Roles & Permissions
+
+Patients can book, reschedule, or cancel their own appointments.
+Receptionists can manage all patient bookings.
+Doctors can view upcoming appointments and update availability.
+1.2 Appointment Scheduling
+✅ Booking an Appointment
+
+Patients select a doctor, date, and time slot from available options.
+Real-time availability updates prevent double bookings.
+✅ Appointment Confirmation & Notifications
+
+Patients receive an email/SMS/WhatsApp confirmation upon successful booking.
+Automatic reminders sent 24 hours and 1 hour before the appointment.
+✅ Rescheduling & Cancellation
+
+Patients can modify or cancel their appointments within set rules (e.g., must cancel 24 hours in advance).
+Clinic staff can override restrictions if necessary.
+✅ Walk-in and Emergency Appointments
+
+Option for receptionists to manually add walk-in patients.
+Emergency bookings should have priority slots that bypass normal scheduling.
+1.3 Doctor & Clinic Management
+✅ Doctor Availability & Scheduling
+
+Doctors can set their availability (e.g., working hours, days off).
+Block out specific times for breaks, meetings, or urgent cases.
+✅ Multiple Clinics Support (if needed)
+
+The system should allow multiple branches or departments in larger clinics.
+✅ Consultation Mode Selection
+
+Patients can choose between in-person or teleconsultation.
+Video consultation integration with Zoom, Google Meet, or Jitsi (optional).
+1.4 Patient Management & Medical Records
+✅ Patient Profile & History
+
+Store past appointment history for easy access.
+(Optional) Basic medical history & allergies for quick reference.
+✅ Prescription & Follow-ups (Future Scope)
+
+Doctors can add prescriptions and recommendations post-appointment.
+Automated reminders for follow-up visits.
+1.5 Reporting & Analytics
+✅ Appointment Insights
+
+Clinic admins can view daily, weekly, and monthly reports on:
+Number of booked/cancelled appointments.
+Peak consultation hours.
+No-show rates.
+✅ Revenue Tracking (if applicable)
+
+Clinics can track consultation fees and revenue per doctor.
+✅ No-Show Analysis
+
+Identify patients with frequent missed appointments for personalized follow-ups.
+2. Non-Functional Requirements (NFRs)
+These define system qualities like performance, security, and usability.
+
+2.1 Performance & Scalability
+✅ Fast & Lightweight
+
+System should handle multiple concurrent users efficiently.
+Load balancing for high-traffic clinics.
+✅ Optimized Search & Booking
+
+Response time for searching appointments should be <2 seconds.
+✅ Cloud-Based for Accessibility
+
+Hosted on AWS, Firebase, or DigitalOcean for easy access.
+2.2 Security & Compliance
+✅ Data Protection & Privacy
+
+Role-based access control (RBAC) to prevent unauthorized access.
+Patient data encryption to meet healthcare standards.
+✅ Backup & Recovery
+
+Daily automatic backups to prevent data loss.
+✅ Two-Factor Authentication (2FA)
+
+Secure login for doctors and admins via OTP or authenticator app.
+✅ Audit Logs
+
+Maintain records of all bookings, cancellations, and modifications.
+2.3 Usability & Accessibility
+✅ User-Friendly Interface
+
+Mobile-responsive design for easy booking via smartphone or tablet.
+✅ Multi-Language Support (Optional)
+
+Include local languages to make the platform more inclusive.
+✅ Assistive Features
+
+Voice input for visually impaired users.
+High-contrast mode for better readability.
+3. Technology Stack Recommendations
+Frontend (User Interface)
+React.js (for dynamic web application).
+Tailwind CSS (for fast, clean UI design).
+React Native or Flutter (if building a mobile app).
+Backend (Logic & APIs)
+Node.js with Express (fast and scalable).
+Django or Flask (Python) (for structured, secure API development).
+Database
+PostgreSQL or MongoDB (to store user profiles, appointments, etc.).
+Redis (for caching real-time booking availability).
+Notifications & Communication
+Twilio API (SMS reminders).
+Firebase Cloud Messaging (FCM) (push notifications).
+Email Integration (SendGrid or SMTP).
+Hosting & Deployment
+AWS Lambda, Vercel, or Firebase for backend hosting.
+PostgreSQL on AWS RDS for scalable database hosting.
