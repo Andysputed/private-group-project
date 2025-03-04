@@ -40,13 +40,15 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-screen grid md:grid-cols-2">
-      <div className="p-8 flex items-center justify-center">
-        <Card className="w-full max-w-md">
-          <CardHeader>
-            <CardTitle>Welcome to ClinicFlow</CardTitle>
+      <div className="p-8 flex items-center justify-center bg-gradient-to-b from-white to-blue-50">
+        <Card className="w-full max-w-md shadow-lg border-0">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+              Welcome to ClinicFlow
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="login">
+            <Tabs defaultValue="login" className="space-y-4">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="login">Login</TabsTrigger>
                 <TabsTrigger value="register">Register</TabsTrigger>
@@ -55,15 +57,28 @@ export default function AuthPage() {
               <TabsContent value="login">
                 <form onSubmit={loginForm.handleSubmit((data) => loginMutation.mutate(data))}>
                   <div className="space-y-4">
-                    <div>
+                    <div className="space-y-2">
                       <Label htmlFor="login-username">Username</Label>
-                      <Input id="login-username" {...loginForm.register("username")} />
+                      <Input 
+                        id="login-username" 
+                        {...loginForm.register("username")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
                     </div>
-                    <div>
+                    <div className="space-y-2">
                       <Label htmlFor="login-password">Password</Label>
-                      <Input id="login-password" type="password" {...loginForm.register("password")} />
+                      <Input 
+                        id="login-password" 
+                        type="password" 
+                        {...loginForm.register("password")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
                     </div>
-                    <Button type="submit" className="w-full" disabled={loginMutation.isPending}>
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-gradient-to-r from-primary to-blue-600 hover:opacity-90 transition-opacity"
+                      disabled={loginMutation.isPending}
+                    >
                       {loginMutation.isPending ? "Logging in..." : "Login"}
                     </Button>
                   </div>
@@ -73,31 +88,62 @@ export default function AuthPage() {
               <TabsContent value="register">
                 <form onSubmit={registerForm.handleSubmit((data) => registerMutation.mutate(data))}>
                   <div className="space-y-4">
-                    <div>
+                    <div className="space-y-2">
                       <Label htmlFor="reg-name">Full Name</Label>
-                      <Input id="reg-name" {...registerForm.register("name")} />
+                      <Input 
+                        id="reg-name" 
+                        {...registerForm.register("name")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
                     </div>
-                    <div>
+                    <div className="space-y-2">
                       <Label htmlFor="reg-email">Email</Label>
-                      <Input id="reg-email" type="email" {...registerForm.register("email")} />
+                      <Input 
+                        id="reg-email" 
+                        type="email" 
+                        {...registerForm.register("email")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
                     </div>
-                    <div>
+                    <div className="space-y-2">
                       <Label htmlFor="reg-username">Username</Label>
-                      <Input id="reg-username" {...registerForm.register("username")} />
+                      <Input 
+                        id="reg-username" 
+                        {...registerForm.register("username")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
                     </div>
-                    <div>
+                    <div className="space-y-2">
                       <Label htmlFor="reg-password">Password</Label>
-                      <Input id="reg-password" type="password" {...registerForm.register("password")} />
+                      <Input 
+                        id="reg-password" 
+                        type="password" 
+                        {...registerForm.register("password")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
                     </div>
-                    <div>
+                    <div className="space-y-2">
                       <Label htmlFor="reg-confirm">Confirm Password</Label>
-                      <Input id="reg-confirm" type="password" {...registerForm.register("confirmPassword")} />
+                      <Input 
+                        id="reg-confirm" 
+                        type="password" 
+                        {...registerForm.register("confirmPassword")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
                     </div>
-                    <div>
+                    <div className="space-y-2">
                       <Label htmlFor="reg-phone">Phone (optional)</Label>
-                      <Input id="reg-phone" {...registerForm.register("phone")} />
+                      <Input 
+                        id="reg-phone" 
+                        {...registerForm.register("phone")}
+                        className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
+                      />
                     </div>
-                    <Button type="submit" className="w-full" disabled={registerMutation.isPending}>
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-gradient-to-r from-primary to-blue-600 hover:opacity-90 transition-opacity"
+                      disabled={registerMutation.isPending}
+                    >
                       {registerMutation.isPending ? "Creating Account..." : "Register"}
                     </Button>
                   </div>
@@ -108,11 +154,13 @@ export default function AuthPage() {
         </Card>
       </div>
 
-      <div className="hidden md:flex flex-col justify-center p-8 bg-primary/5">
-        <div className="max-w-md mx-auto">
-          <CalendarDays className="h-12 w-12 text-primary mb-4" />
-          <h2 className="text-3xl font-bold mb-4">Streamlined Healthcare Scheduling</h2>
-          <p className="text-muted-foreground">
+      <div className="hidden md:flex flex-col justify-center p-12 bg-gradient-to-br from-primary/5 to-blue-50">
+        <div className="max-w-md mx-auto space-y-6">
+          <CalendarDays className="h-16 w-16 text-primary mb-4" />
+          <h2 className="text-4xl font-bold bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+            Streamlined Healthcare Scheduling
+          </h2>
+          <p className="text-lg text-slate-600 leading-relaxed">
             Efficiently manage your medical appointments with our integrated scheduling system.
             Book consultations, track appointments, and receive timely reminders all in one place.
           </p>
