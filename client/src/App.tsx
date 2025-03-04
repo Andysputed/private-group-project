@@ -7,6 +7,7 @@ import NotFound from "@/pages/not-found";
 import AuthPage from "@/pages/auth-page";
 import Dashboard from "@/pages/dashboard";
 import Appointments from "@/pages/appointments";
+import DoctorAvailability from "@/pages/doctor-availability";
 import { ProtectedRoute } from "./lib/protected-route";
 
 function Router() {
@@ -15,6 +16,7 @@ function Router() {
       <Route path="/auth" component={AuthPage} />
       <ProtectedRoute path="/" component={Dashboard} />
       <ProtectedRoute path="/appointments" component={Appointments} />
+      <ProtectedRoute path="/availability" component={DoctorAvailability} />
       <Route component={NotFound} />
     </Switch>
   );

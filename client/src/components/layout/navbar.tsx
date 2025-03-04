@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { CalendarDays, LayoutDashboard, LogOut, User } from "lucide-react";
+import { CalendarDays, LayoutDashboard, LogOut, User, Clock } from "lucide-react";
 
 export default function Navbar() {
   const { user, logoutMutation } = useAuth();
@@ -38,6 +38,14 @@ export default function Navbar() {
                 <span>Appointments</span>
               </Link>
             </Button>
+            {user?.role === 'doctor' && (
+              <Button variant="ghost" className="hover:bg-primary/10" asChild>
+                <Link href="/availability" className="space-x-2">
+                  <Clock className="h-4 w-4" />
+                  <span>Set Availability</span>
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
 
