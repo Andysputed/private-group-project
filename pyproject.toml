@@ -1,0 +1,17 @@
+[project]
+name = "repl-nix-workspace"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "bcrypt>=4.3.0",
+    "flask>=3.1.0",
+    "flask-cors>=5.0.1",
+    "flask-jwt-extended>=4.7.1",
+    "pymongo>=4.11.2",
+    "python-dotenv>=1.0.1",
+    "python-jose[cryptography]>=3.4.0",
+    "redis>=5.2.1",
+    "sendgrid>=6.11.0",
+    "twilio>=9.4.6",
+]
